@@ -1,3 +1,5 @@
+import { useParams } from "react-router";
+
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
@@ -5,12 +7,22 @@ import Header from "../components/Header";
 import posts from "../data/posts";
 
 function Post() {
+    const { id } = useParams();
+
+    // buscar no array de posts o post que possui o id recebido
+    const post = posts.find((p) => p.id === parseInt(id));
+
+    // retornar erro senao encontrar o post
+    if (!post) {
+        return <div>Post não encontrado</div>;
+    }
+
     return (
         <>
             <Header title="Meu Blog" />
-            <h1>{posts[0].title}</h1>
-            <p>{posts[0].author} / {posts[0].date}</p>
-            <p>{posts[0].content}</p>
+            <h1>{post.title}</h1>
+            <p>{post.author} / {post.date}</p>
+            <p>{post.content}</p>
             <Footer text="Todos os direitos reservados" />
         </>
     );
